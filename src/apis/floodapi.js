@@ -1,6 +1,6 @@
 const requestData = () =>
   fetch(
-    "http://environment.data.gov.uk/flood-monitoring/id/stations?parameter=flow",
+    "http://environment.data.gov.uk/flood-monitoring/id/floodAreas/122WAC953",
     {
       method: "GET",
       headers: {

@@ -3,17 +3,19 @@ import './App.css';
 import { useState, useEffect, useRef } from 'react';
 import requestData from './apis/floodapi';
 import mapboxgl from 'mapbox-gl';
+import AddLayer from './apis/addlayer';
 
 function App() {
 // Pulling Data
 
-  useEffect(() => {
-    const data = async () => {
-      const res = await requestData();
-      // console.log(res);
-    } 
-    data();
-  },[])
+  // useEffect(() => {
+  //   const data = async () => {
+  //     const res = await requestData();
+  //     console.log(res);
+  //   } 
+  //   data();
+  // },[])
+  
 
 
   // var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
@@ -42,6 +44,59 @@ const [zoom, setZoom] = useState(9);
       // });
     
       map.current.on('load', () => {
+        
+        
+        fetch(
+          "https://environment.data.gov.uk/flood-monitoring/id/floods",
+          {
+            method: "GET",
+            headers: {},
+          }
+        )
+          .then((response) => {
+            
+            return response.json();
+          })
+          .then((res) => {
+            
+            return res.items.map((e, i)=>{
+              map.current.addSource(`flood-warning-${i}`, {
+                type: "geojson",
+                data: e.floodArea.polygon,
+              });
+              map.current.addLayer({
+                id: `flood-warning-${i}`,
+                type: "fill",
+                source: `flood-warning-${i}`, // reference the data source
+                layout: {},
+                paint: {
+                  'fill-color': '#0080ff', // blue color fill
+'fill-opacity': 0.5
+                },
+              })
+              // Add a black outline around the polygon.
+              // map.current.addLayer({
+              //   id: `outline-${i}`,
+              //   type: "line",
+              //   source: `flood-warning-${i}`,
+              //   layout: {},
+              //   paint: {
+              //     'line-color': '#000',
+              //     'line-width': 1
+              //   },
+              // });
+
+            })
+
+
+        
+          })
+          .catch((error) => {
+            console.log("Something went wrong " + error);
+          });
+        
+        
+
         // Add a custom vector tileset source. This tileset contains
         // point features representing museums. Each feature contains
         // three properties. For example:
@@ -74,7 +129,6 @@ const [zoom, setZoom] = useState(9);
           }
       })
     })
-    console.log(map.current.getLayer('recorded'))
 
     map.current.on('idle', () => {
       // If these two layers were not added to the map, abort
@@ -131,18 +185,31 @@ const [zoom, setZoom] = useState(9);
 
     });
 
-   
+    useEffect(() => {
+    
+    
+  
+    },[])
+
+
+    const [flood, setFlood] = useState(false);
+
+    const onClick = () =>{
+      console.log(flood)
+      setFlood(!flood);
+    }
 
   return (
     <div id="App" className="App" >
-      {/* <div className="sidebar">
-Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-</div> */}
-<nav id="menu"></nav>
-      <div id="map" ref={mapContainer}>
+      
+<nav id="menu" ></nav>
+
+      <div id="map" ref={mapContainer} onClick={()=> onClick()}>
 
       </div>
 
+      {/* {flood && <AddLayer map={map.current}/>} */}
+      
     </div>
   );
 }
