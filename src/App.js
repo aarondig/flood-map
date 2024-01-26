@@ -71,7 +71,7 @@ const [zoom, setZoom] = useState(9);
                 layout: {},
                 paint: {
                   'fill-color': '#0080ff', // blue color fill
-'fill-opacity': 0.5
+                  'fill-opacity': 0.5
                 },
               })
               // Add a black outline around the polygon.
@@ -122,13 +122,15 @@ const [zoom, setZoom] = useState(9);
           },
           
           'paint': {
-            'fill-color': 'rgba(42, 50, 60, 0.8)',
+            'fill-color': '#3BA8A7',
+            "fill-opacity": .5,
             
           // 'line-color': '#877b59',
           // 'line-width': 1
           }
       })
     })
+    
 
     map.current.on('idle', () => {
       // If these two layers were not added to the map, abort
