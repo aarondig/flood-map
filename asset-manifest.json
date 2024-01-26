@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/aarondig/flood-map/static/css/main.3186a2c0.css",
+    "main.js": "/aarondig/flood-map/static/js/main.0b699140.js",
+    "index.html": "/aarondig/flood-map/index.html",
+    "main.3186a2c0.css.map": "/aarondig/flood-map/static/css/main.3186a2c0.css.map",
+    "main.0b699140.js.map": "/aarondig/flood-map/static/js/main.0b699140.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3186a2c0.css",
+    "static/js/main.0b699140.js"
+  ]
+}
